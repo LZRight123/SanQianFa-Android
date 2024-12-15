@@ -40,6 +40,7 @@ import com.fantasy.components.extension.mockImage
 import com.fantasy.components.extension.randomString
 import com.fantasy.components.extension.toStringFormat
 import com.fantasy.components.theme.CXColor
+import com.fantasy.components.theme.CXFont
 import com.fantasy.components.theme.CXMutableColors
 import com.fantasy.components.tools.Apphelper
 import com.fantasy.components.tools.UIImage
@@ -72,7 +73,7 @@ class MainView : BaseScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(text = "MainView", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(text = "MainView", style = CXFont.f1.v1)
         }
     }
 

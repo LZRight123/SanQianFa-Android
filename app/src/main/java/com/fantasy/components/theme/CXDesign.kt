@@ -73,13 +73,13 @@ enum class Theme(
     val light: Color,
     val dark: Color
 ) {
-    main(light = Color(0xFF6735C0), dark = Color(0xFFFFFFFF)),
-    f1(light = Color(0xFF212121), dark = Color(0xFFFCFCFC)),
-    f2(light = Color(0xFF7C7C7C), dark = Color(0xFFB3B3B3)),
-    f3(light = Color(0xFFCECECE), dark = Color(0xFF8B8B8B)),
-    b1(light = Color(0xFFFFFFFF), dark = Color(0xFF202020)),
-    b2(light = Color(0xFFF8F8F8), dark = Color(0xFF0D0D0D)),
-    b3(light = Color(0xFFD7D7D7), dark = Color(0xFF000000)),
+    main(light = Color(0xFFB44E4E), dark = Color(0xFFB44E4E)),
+    f1(light = Color(0xFFE2DDD3), dark = Color(0xFFE2DDD3)),
+    f2(light = Color(0xFF7D7A7D), dark = Color(0xFF7D7A7D)),
+    f3(light = Color(0xFF817E81), dark = Color(0xFF817E81)),
+    b1(light = Color(0xFF030003), dark = Color(0xFF030003)),
+    b2(light = Color(0xFF191619), dark = Color(0xFF191619)),
+    b3(light = Color(0xFFD9D9D9), dark = Color(0xFFD9D9D9)),
     error(light = Color(0xFFFF4040), dark = Color(0xFFFFFFFF)),
     black(light = Color(0xFF000000), dark = Color(0xFFFFFFFF)),
     white(light = Color(0xFFFFFFFF), dark = Color(0xFFFFFFFF)),
@@ -149,8 +149,8 @@ enum class CXFont {
     ;
 
     private val big1sp = 32.sp
-    private val big2sp = 24.sp
-    private val big3sp = 20.sp
+    private val big2sp = 27.sp
+    private val big3sp = 24.sp
     private val f1sp = 17.sp
     private val f2sp = 15.sp
     private val f3sp = 13.sp
@@ -219,7 +219,7 @@ private fun Preview2() {
             item {
                 Text(
                     text = "颜色",
-                    style = CXFont.big1.v2.boldBlack,
+                    style = CXFont.big1.v1.boldBlack,
                     modifier = Modifier.padding(top = 20.dp)
                 )
             }
