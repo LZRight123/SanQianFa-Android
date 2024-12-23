@@ -21,12 +21,6 @@ fun routeToLogin() {
 //    } else {
     Apphelper.replaceAll(LoginMainView(), animate = RouterAnimate.vertical)
 //    }
-    /**
-     * git commit -m "first commit"
-     * git branch -M main
-     * git remote add origin https://github.com/LZRight123/SanQianFa-Android.git
-     * git push -u origin main
-     */
 }
 
 

@@ -45,8 +45,8 @@ class LocalUserManager private constructor() : ViewModel() {
     private var _access_token = ""
     val access_token
         get() = if (isDebugBuilder) {
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk3NjE2MjksInN1YiI6ImFmYTQzZjg4LWExMWUtNDc4My05MDVmLTEwM2I2MGFjOGU0YiJ9.czkKia2oOKhcUzWxPIZ2aq_5keRZGAtIXlGYsiG5EE4"
-//            _access_token.ifEmpty { getToken() }
+//        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk3NjE2MjksInN1YiI6ImFmYTQzZjg4LWExMWUtNDc4My05MDVmLTEwM2I2MGFjOGU0YiJ9.czkKia2oOKhcUzWxPIZ2aq_5keRZGAtIXlGYsiG5EE4"
+            _access_token.ifEmpty { getToken() }
         } else _access_token.ifEmpty { getToken() }
     val isLogin get() = access_token.isNotEmpty()
 
