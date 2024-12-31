@@ -17,113 +17,115 @@ import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.widget.CXScaffold
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.lazy.LazyColumn
+import com.fantasy.components.extension.f2c
 
 @Composable
 fun LearningView() {
     CXScaffold(
         topBar = {}
     ) {
-        Column(
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .background(CXColor.b1)
+                .fillMaxSize()
                 .padding(horizontal = 16.dp)
         ) {
-            // 标题
-            Text(
-                text = "✨ 三钱法入门指南",
-                style = CXFont.f1.v1.f1c.alignCenter,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-            )
+            item {
+                Text(
+                    text = "三钱法",
+                    style = CXFont.f3.v1.f2c.copy(letterSpacing = 3.sp),
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                )
+            }
 
-            // 简介部分
-            ContentSection(
-                icon = "🎲",
-                title = "什么是三钱法",
-                content = "三钱法是一种简单而古老的占卜方法，使用三枚铜钱进行卦象演算。这种方法源自《周易》，是传统易经占卜的简化版本。"
-            )
+            // Content sections
+            item {
+                ContentSection(
+                    title = "什么是三钱法",
+                    content = "三钱法是易经预测中的一种简便占卦方法，使用三枚铜钱来演算卦象。这种方法简单易学，是初学者入门易经预测的理想选择。"
+                )
+            }
 
-            // 原理说明
-            ContentSection(
-                icon = "⚡️",
-                title = "基本原理",
-                content = """
-                    三枚铜钱同时投掷，根据正反面组合得出阴阳爻：
-                    
-                    🔵 三正（圆圈）→ 老阳
-                    🔵 二正一反 → 少阴
-                    🔵 一正二反 → 少阳
-                    🔵 三反 → 老阴
-                """.trimIndent()
-            )
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
 
-            // 操作步骤
-            ContentSection(
-                icon = "📝",
-                title = "具体步骤",
-                content = """
-                    1️⃣ 准备三枚铜钱
-                    2️⃣ 诚心默念求卦事项
-                    3️⃣ 将铜钱置于手心摇晃
-                    4️⃣ 同时投掷三枚铜钱
-                    5️⃣ 记录每次结果
-                    6️⃣ 重复六次完成卦象
-                """.trimIndent()
-            )
+            item {
+                ContentSection(
+                    title = "基本原理",
+                    content = "• 准备工具：三枚相同的铜钱\n• 正面（阳）：数字面\n• 反面（阴）：文字面"
+                )
+            }
 
-            // 注意事项
-            ContentSection(
-                icon = "⚠️",
-                title = "注意事项",
-                content = """
-                    🌟 占卜时应保持虔诚恭敬的心态
-                    🌟 每次求卦前要集中精神
-                    🌟 记录结果要准确无误
-                    🌟 解卦时需结合具体情况
-                """.trimIndent()
-            )
-            
-            Spacer(modifier = Modifier.height(20.dp))
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            item {
+                ContentSection(
+                    title = "爻的形成",
+                    content = "• 三枚正面（3阳）：老阳 ○ (9)\n• 二正一反（2阳1阴）：少阳 ⚊ (7)\n• 一正二反（1阳2阴）：少阴 ⚋ (8)\n• 三枚反面（3阴）：老阴 × (6)"
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            item {
+                ContentSection(
+                    title = "实践步骤",
+                    content = "1. 净心：保持心静、专注\n2. 持钱：将三枚铜钱捧在手心\n3. 摇钱：默想问题，同时摇动铜钱\n4. 投掷：将钱币抛出\n5. 记录：观察钱币正反面，记录结果\n6. 重复：共进行六次，从下往上记录爻"
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            item {
+                ContentSection(
+                    title = "注意事项",
+                    content = "• 占卦时应保持虔诚、专注的心态\n• 问题要明确具体\n• 同一个问题短期内不要重复占卦\n• 记录时注意爻的顺序是从下往上"
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(120.dp))
+            }
         }
     }
 }
 
 @Composable
 private fun ContentSection(
-    icon: String,
     title: String,
-    content: String,
-    modifier: Modifier = Modifier
+    content: String
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
-            .background(CXColor.b2, shape = RoundedCornerShape(12.dp))
-            .padding(16.dp)
+            .background(
+                color = CXColor.b2,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .padding(24.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 12.dp)
-        ) {
-            Text(
-                text = icon,
-                style = CXFont.f2.v1.f1c,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text(
-                text = title,
-                style = CXFont.f2.v2.f1c,
-            )
-        }
+        Text(
+            text = title,
+            style = CXFont.big3b.v1,
+            color = CXColor.f1
+        )
+        
+        Spacer(modifier = Modifier.height(12.dp))
         
         Text(
             text = content,
-            style = CXFont.f3.v2.f1c,
-            modifier = Modifier.fillMaxWidth()
+            style = CXFont.f2.v1,
+            color = CXColor.f2,
         )
     }
 }

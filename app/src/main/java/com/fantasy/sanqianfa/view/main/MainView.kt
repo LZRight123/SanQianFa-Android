@@ -50,11 +50,11 @@ class MainView: BaseScreen() {
                 }
             ) {
                 when (it) {
-                    TabBarType.home -> DebugText(it.title)
+                    TabBarType.home -> HomeView(tabBarPadding = innePadding.calculateBottomPadding())
                     TabBarType.things -> HistrotyView(tabBarPadding = innePadding.calculateBottomPadding())
                     TabBarType.add -> {}
                     TabBarType.learn -> LearningView()
-                    TabBarType.profile -> DebugText(it.title)
+                    TabBarType.profile -> ProfileView()
                 }
             }
         }

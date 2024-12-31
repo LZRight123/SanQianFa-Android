@@ -1,5 +1,6 @@
 package com.fantasy.sanqianfa.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
@@ -15,9 +16,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
+import com.fantasy.components.extension.compose.Icon
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.widget.CXButton
+import com.fantasy.sanqianfa.R
 
 @Composable
 fun SQMainButton(
@@ -51,15 +54,33 @@ fun SQMainButton(
     }
 }
 
+
+@Composable
+fun SQIcon(
+    @DrawableRes id: Int,
+    size: Int = 24,
+    tint: Color = CXColor.f1
+) {
+    Icon(
+        id = id,
+        size = size,
+        tint = tint
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun SQDesignPreview() {
     Column(
-        modifier = Modifier.padding(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier
+            .padding(16.dp)
             .fillMaxSize()
     ) {
         SQMainButton(text = "主按钮") {
 
         }
+
+        SQIcon(id = R.drawable.tabbar_home)
     }
 }

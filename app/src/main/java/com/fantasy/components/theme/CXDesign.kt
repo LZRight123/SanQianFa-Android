@@ -37,6 +37,8 @@ class CXMutableColors(
     error: Color,
     black: Color,
     white: Color,
+    green: Color,
+    blue: Color,
 ) {
     var main: Color by mutableStateOf(main)
         private set
@@ -57,6 +59,10 @@ class CXMutableColors(
     var black: Color by mutableStateOf(black)
         private set
     var white: Color by mutableStateOf(white)
+        private set
+    var green: Color by mutableStateOf(green)
+        private set
+    var blue: Color by mutableStateOf(blue)
         private set
 
     val random: Color
@@ -83,6 +89,8 @@ enum class Theme(
     error(light = Color(0xFFFF4040), dark = Color(0xFFFFFFFF)),
     black(light = Color(0xFF000000), dark = Color(0xFFFFFFFF)),
     white(light = Color(0xFFFFFFFF), dark = Color(0xFFFFFFFF)),
+    green(light = Color(0xFF057C5B), dark = Color(0xFF057C5B)),
+    blue(light = Color(0xFF4C51CA), dark = Color(0xFF4C51CA)),
     ;
 }
 
@@ -97,6 +105,8 @@ val LightColorPalette = CXMutableColors(
     error = Theme.error.light,
     black = Theme.black.light,
     white = Theme.white.light,
+    green = Theme.green.light,
+    blue = Theme.blue.light,
 )
 
 val DarkColorPalette = CXMutableColors(
@@ -110,6 +120,8 @@ val DarkColorPalette = CXMutableColors(
     error = Theme.error.dark,
     black = Theme.black.dark,
     white = Theme.white.dark,
+    green = Theme.green.dark,
+    blue = Theme.blue.dark,
 )
 
 /*
