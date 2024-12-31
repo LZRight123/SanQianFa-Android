@@ -53,10 +53,11 @@ fun Modifier.topFadingEdge(
     spec: AnimationSpec<Dp>? = null
 ) = fadingEdge(FadeSide.TOP, color = color, width = width, isVisible = isVisible, spec = spec)
 
+@Composable
 fun Modifier.bottomFadingEdge(
-    color: Color,
+    color: Color = CXColor.b1,
     isVisible: Boolean = true,
-    width: Dp = 18.dp,
+    width: Dp = safeAreaBottom + 180.dp,
     spec: AnimationSpec<Dp>? = null
 ) = fadingEdge(FadeSide.BOTTOM, color = color, width = width, isVisible = isVisible, spec = spec)
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.fantasy.components.theme.CXTheme
 
@@ -32,6 +33,12 @@ abstract class BaseActivity : FragmentActivity() {
          * 通过以上三步设置完成全屏展示
          */
         enableEdgeToEdge()
+
+        // 设置状态栏文字为白色
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false  // false = 白色文字
+            isAppearanceLightNavigationBars = false
+        }
 
         setContent {
             CXTheme {

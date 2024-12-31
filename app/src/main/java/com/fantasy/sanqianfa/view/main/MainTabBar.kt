@@ -21,49 +21,57 @@ import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fantasy.components.extension.color
 import com.fantasy.components.extension.compose.Icon
+import com.fantasy.components.extension.compose.addHazeOver
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.tools.Apphelper
 import com.fantasy.components.tools.screenWith
 import com.fantasy.components.widget.CXButton
+import com.fantasy.components.widget.CXHLine
 import com.fantasy.sanqianfa.model.TabBarType
 
 @Composable
 fun MainTabBar() {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(vertical = 8.dp)
-            .navigationBarsPadding()
+    Box(
+        modifier = Modifier.addHazeOver(CXColor.b1.copy(0.95f))
     ) {
-        TabBarType.entries.forEach { type ->
-            if (type == TabBarType.add) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.width((screenWith * 0.2 + 24).dp)
-                ) {
-                    CXButton(
-                        onClick = {
-                            Apphelper.toast(msg = "临时起卦")
-                        },
-                        modifier = Modifier
-                            .background(CXColor.f1, CircleShape)
-                            .requiredSize(58.dp)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .navigationBarsPadding()
+        ) {
+            TabBarType.entries.forEach { type ->
+                if (type == TabBarType.add) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.width((screenWith * 0.2 + 24).dp)
                     ) {
-                        Icon(
-                            id = type.icon,
-                            tint = CXColor.b1,
-                            size = 24
-                        )
+                        CXButton(
+                            onClick = {
+                                Apphelper.toast(msg = "临时起卦")
+                            },
+                            modifier = Modifier
+                                .background(CXColor.f1, CircleShape)
+                                .requiredSize(58.dp)
+                        ) {
+                            Icon(
+                                id = type.icon,
+                                tint = CXColor.b1,
+                                size = 24
+                            )
+                        }
                     }
+                } else {
+                    TabBarItem(
+                        type = type,
+                        modifier = Modifier.weight(1f)
+                    )
                 }
-            } else {
-                TabBarItem(
-                    type = type,
-                    modifier = Modifier.weight(1f)
-                )
             }
         }
+
+        CXHLine()
     }
 }
 

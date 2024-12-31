@@ -41,7 +41,7 @@ class MainView: BaseScreen() {
             bottomBar = {
                 MainTabBar()
             }
-        ) {
+        ) { innePadding ->
             AnimatedContent(
                 targetState = vm.currentTabBar,
                 label = "",
@@ -51,9 +51,9 @@ class MainView: BaseScreen() {
             ) {
                 when (it) {
                     TabBarType.home -> DebugText(it.title)
-                    TabBarType.things -> DebugText(it.title)
+                    TabBarType.things -> HistrotyView(tabBarPadding = innePadding.calculateBottomPadding())
                     TabBarType.add -> {}
-                    TabBarType.learn -> DebugText(it.title)
+                    TabBarType.learn -> LearningView()
                     TabBarType.profile -> DebugText(it.title)
                 }
             }
