@@ -2,6 +2,8 @@ package com.fantasy.sanqianfa.view.main
 
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -21,33 +23,47 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
+import com.fantasy.components.aamedium.bottomFadingEdge
 import com.fantasy.components.base.BaseScreen
 import com.fantasy.components.base.BaseViewModel
+import com.fantasy.components.extension.compose.addHazeContent
+import com.fantasy.components.extension.compose.cxBlur
 import com.fantasy.components.extension.f1c
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.widget.CXScaffold
 import com.fantasy.sanqianfa.model.TabBarType
 
-class MainViewModel: BaseViewModel() {
+class MainViewModel : BaseViewModel() {
     var currentTabBar by mutableStateOf(TabBarType.home)
+    var showInputCard by mutableStateOf(false)
+    var userInput by mutableStateOf("")
 }
 
-class MainView: BaseScreen() {
+class MainView : BaseScreen() {
     @Composable
     override fun body() {
         val vm: MainViewModel = viewModel()
+        val blur by animateDpAsState(
+            targetValue = if (vm.showInputCard) 20.dp else 0.dp,
+            label = "",
+            animationSpec = tween(200)
+        )
         CXScaffold(
             topBar = {},
             bottomBar = {
                 MainTabBar()
-            }
+            },
+            modifier = Modifier.cxBlur(blur)
         ) { innePadding ->
             AnimatedContent(
                 targetState = vm.currentTabBar,
                 label = "",
                 transitionSpec = {
                     fadeIn() togetherWith fadeOut()
-                }
+                },
+                modifier = Modifier
+                    .addHazeContent()
+                    .bottomFadingEdge()
             ) {
                 when (it) {
                     TabBarType.home -> HomeView(tabBarPadding = innePadding.calculateBottomPadding())
@@ -58,6 +74,8 @@ class MainView: BaseScreen() {
                 }
             }
         }
+
+        HomeAskView()
     }
 
     @Composable

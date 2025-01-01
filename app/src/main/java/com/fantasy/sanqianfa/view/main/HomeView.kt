@@ -38,8 +38,6 @@ fun HomeView(tabBarPadding: Dp = 0.dp) {
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
-                .addHazeContent()
-                .bottomFadingEdge()
                 .fillMaxWidth(),
         ) {
             item { HeaderSection() }

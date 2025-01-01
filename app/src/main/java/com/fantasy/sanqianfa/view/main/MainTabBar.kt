@@ -43,25 +43,7 @@ fun MainTabBar() {
         ) {
             TabBarType.entries.forEach { type ->
                 if (type == TabBarType.add) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.width((screenWith * 0.2 + 24).dp)
-                    ) {
-                        CXButton(
-                            onClick = {
-                                Apphelper.toast(msg = "临时起卦")
-                            },
-                            modifier = Modifier
-                                .background(CXColor.f1, CircleShape)
-                                .requiredSize(58.dp)
-                        ) {
-                            Icon(
-                                id = type.icon,
-                                tint = CXColor.b1,
-                                size = 24
-                            )
-                        }
-                    }
+                    AddButton()
                 } else {
                     TabBarItem(
                         type = type,
@@ -72,6 +54,31 @@ fun MainTabBar() {
         }
 
         CXHLine()
+    }
+}
+
+@Composable
+private fun AddButton(
+    vm: MainViewModel = viewModel()
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.width((screenWith * 0.2 + 24).dp)
+    ) {
+        CXButton(
+            onClick = {
+                vm.showInputCard = true
+            },
+            modifier = Modifier
+                .background(CXColor.f1, CircleShape)
+                .requiredSize(58.dp)
+        ) {
+            Icon(
+                id = TabBarType.add.icon,
+                tint = CXColor.b1,
+                size = 24
+            )
+        }
     }
 }
 

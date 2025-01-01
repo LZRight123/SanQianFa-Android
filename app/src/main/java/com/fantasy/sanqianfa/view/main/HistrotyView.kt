@@ -42,8 +42,6 @@ fun HistrotyView(tabBarPadding: Dp = 0.dp) {
             verticalArrangement = Arrangement.spacedBy(3.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .addHazeContent()
-                .bottomFadingEdge()
                 .fillMaxSize()
         ) {
             // Header
