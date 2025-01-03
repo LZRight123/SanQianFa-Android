@@ -26,7 +26,9 @@ import com.fantasy.components.extension.f1c
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.tools.Apphelper
+import com.fantasy.components.tools.RouterAnimate
 import com.fantasy.sanqianfa.components.SQSmallButton
+import com.fantasy.sanqianfa.view.divination.DivinationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -104,9 +106,8 @@ private fun HomeAskViewContent(
 
             SQSmallButton(text = "起卦") {
                 vm.showInputCard = false
-                Apphelper.toast(vm.userInput)
                 vm.userInput = ""
-
+                Apphelper.push(DivinationView(), animate = RouterAnimate.vertical)
             }
         }
 
