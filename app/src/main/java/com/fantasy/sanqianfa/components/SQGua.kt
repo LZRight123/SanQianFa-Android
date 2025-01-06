@@ -124,8 +124,8 @@ fun YANG() {
 @Composable
 fun SQGua(hexagram: Hexagram) {
     Column(
-        modifier = Modifier.padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         // Reverse and iterate to render from bottom to top
         hexagram.binary.reversed().forEach { digit ->
@@ -134,6 +134,7 @@ fun SQGua(hexagram: Hexagram) {
                 '1' -> YANG()
             }
         }
+        Text(text = hexagram.name, style = CXFont.f3.v1.f1c)
     }
 }
 

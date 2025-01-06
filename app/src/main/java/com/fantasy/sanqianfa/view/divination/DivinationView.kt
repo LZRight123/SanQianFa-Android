@@ -1,8 +1,13 @@
 package com.fantasy.sanqianfa.view.divination
 
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,20 +38,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fantasy.components.base.BaseScreen
 import com.fantasy.components.base.BaseViewModel
 import com.fantasy.components.extension.compose.Icon
+import com.fantasy.components.extension.f1c
 import com.fantasy.components.extension.f2c
+import com.fantasy.components.extension.main
+import com.fantasy.components.extension.randomString
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.tools.cxlog
 import com.fantasy.components.widget.CXScaffold
 import com.fantasy.sanqianfa.R
+import com.fantasy.sanqianfa.components.Hexagram
+import com.fantasy.sanqianfa.components.SQGua
 import com.fantasy.sanqianfa.components.SQSmallButton
 import com.fantasy.sanqianfa.components.YANG
 import com.fantasy.sanqianfa.components.YIN
+import com.fantasy.sanqianfa.manager.DivinationTool
+import com.fantasy.sanqianfa.manager.YaoType
 import io.github.sagar_viradiya.koreography
 
 class DivinationViewModel : BaseViewModel() {
@@ -55,9 +68,19 @@ class DivinationViewModel : BaseViewModel() {
     var coinFace by mutableStateOf((1..3).map { true })
 
     // yao 为卦象，共 6 个，用于起卦，用来存错coinFace为正面的个数
-    var yao = mutableStateListOf(-1, -1, -1, -1, -1, -1)
+    var yao = mutableStateListOf(
+        YaoType.未定,
+        YaoType.未定,
+        YaoType.未定,
+        YaoType.未定,
+        YaoType.未定,
+        YaoType.未定,
+    )
     var divinationIndex by mutableIntStateOf(0)
     val isOver get() = divinationIndex == 6
+    var gua by mutableStateOf<Hexagram?>(null)
+    var bianGua by mutableStateOf<Hexagram?>(null)
+
 
     fun divination() {
         if (isOver) {
@@ -76,75 +99,118 @@ class DivinationViewModel : BaseViewModel() {
         if (!running) return
 
         running = false
-        yao[divinationIndex] = coinFace.count { it }
+        val faceCount = coinFace.count { it }
+        yao[divinationIndex] = DivinationTool.getYaoType(faceCount)
         divinationIndex += 1
+        if (isOver) {
+            gua = DivinationTool.getOriginalHexagram(yao)
+            bianGua = DivinationTool.getChangedHexagram(yao)
+        }
     }
 }
 
-class DivinationView : BaseScreen() {
+class DivinationView(val question: String) : BaseScreen() {
     @Composable
     override fun body() {
         val vm: DivinationViewModel = viewModel()
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+
+        Box(
             modifier = Modifier
                 .background(CXColor.b1)
                 .systemBarsPadding()
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            if (!vm.isOver) {
+            if (vm.isOver) {
+                Text(text = question, style = CXFont.big1b.v1.f1c)
+            } else {
                 coins()
             }
-            Spacer(modifier = Modifier.weight(1f))
-            result()
-            Spacer(modifier = Modifier.weight(1f))
-            SQSmallButton(text = if (vm.isOver) "解卦" else "起卦（${vm.divinationIndex + 1}/6）") {
-                vm.divination()
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Spacer(modifier = Modifier.weight(1f))
+                result()
+                Spacer(modifier = Modifier.weight(1f))
+                SQSmallButton(text = if (vm.isOver) "解卦" else "起卦（${vm.divinationIndex + 1}/6）") {
+                    vm.divination()
+                }
             }
         }
+
     }
 
     @Composable
     fun result(vm: DivinationViewModel = viewModel()) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+        AnimatedVisibility(
+            visible =  vm.isOver,
+            enter = fadeIn(tween(1000)),
+            exit = fadeOut(),
+            modifier = Modifier.scale(3f)
         ) {
-            vm.yao.reversed().forEach { yangCount ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    when (yangCount) {
-                        3 -> {
-                            YANG()
-                            Text(text = "老阳", style = CXFont.f3.v1.f2c)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                vm.gua?.let {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "此刻",
+                            style = CXFont.f1.v1.main,
+                            modifier = Modifier.scale(0.6f)
+                        )
+                        SQGua(hexagram = it)
+                    }
+                }
+                vm.bianGua?.let {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "未来",
+                            style = CXFont.f1.v1.main,
+                            modifier = Modifier.scale(0.6f)
+                        )
+                        SQGua(hexagram = it)
+                    }
+                }
+
+            }
+        }
+        if (vm.isOver) {
+
+
+        } else {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                vm.yao.reversed().forEach { type ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        when (type) {
+                            YaoType.老阳, YaoType.少阳 -> YANG()
+                            YaoType.少阴, YaoType.老阴 -> YIN()
+                            YaoType.未定 -> {}
                         }
 
-                        2 -> {
-                            YANG()
-                            Text(text = "少阳", style = CXFont.f3.v1.f2c)
-                        }
+                        Text(text = type.name, style = CXFont.f3.v1.f2c)
 
-                        1 -> {
-                            YIN()
-                            Text(text = "少阴", style = CXFont.f3.v1.f2c)
-                        }
-
-                        0 -> {
-                            YIN()
-                            Text(text = "老阴", style = CXFont.f3.v1.f2c)
-                        }
-
-                        else -> {
-                            Text(text = "未定", style = CXFont.f3.v1.f2c)
-                        }
                     }
                 }
             }
         }
+
     }
 
     @Composable
@@ -179,7 +245,7 @@ class DivinationView : BaseScreen() {
                         move(
                             animation,
                             coin,
-                            animationSpec = tween((1500..1800).random())
+                            animationSpec = tween((150..180).random())
                         )
                     }
                 }
@@ -230,5 +296,5 @@ class DivinationView : BaseScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    DivinationView().body()
+    DivinationView(question = randomString()).body()
 }

@@ -106,8 +106,8 @@ private fun HomeAskViewContent(
 
             SQSmallButton(text = "起卦") {
                 vm.showInputCard = false
+                Apphelper.push(DivinationView(vm.userInput), animate = RouterAnimate.vertical)
                 vm.userInput = ""
-                Apphelper.push(DivinationView(), animate = RouterAnimate.vertical)
             }
         }
 

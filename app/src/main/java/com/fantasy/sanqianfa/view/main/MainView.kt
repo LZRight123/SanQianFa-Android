@@ -36,7 +36,7 @@ import com.fantasy.sanqianfa.model.TabBarType
 class MainViewModel : BaseViewModel() {
     var currentTabBar by mutableStateOf(TabBarType.home)
     var showInputCard by mutableStateOf(false)
-    var userInput by mutableStateOf("")
+    var userInput by mutableStateOf("我这个月的桃花怎么样？")
 }
 
 class MainView : BaseScreen() {

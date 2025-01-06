@@ -15,6 +15,10 @@ fun TextStyle.color(color: Color) = copy(color = color)
 fun TextStyle.size(size: Int) = copy(fontSize = size.sp)
 val TextStyle.alignCenter get() = copy(textAlign = TextAlign.Center)
 val TextStyle.alignEnd get() = copy(textAlign = TextAlign.End)
+
+val TextStyle.main @Composable
+get() = color(CXColor.main)
+
 val TextStyle.f1c @Composable
 get() = color(CXColor.f1)
 
