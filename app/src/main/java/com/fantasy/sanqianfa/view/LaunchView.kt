@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
@@ -26,7 +24,7 @@ import com.fantasy.sanqianfa.R
 import com.fantasy.sanqianfa.routeToMain
 import kotlinx.coroutines.delay
 
-class WelcomeView : Screen {
+class LaunchView : Screen {
     @Composable
     override fun Content() {
         LaunchedEffect(Unit) {
@@ -56,5 +54,5 @@ class WelcomeView : Screen {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    WelcomeView().Content()
+    LaunchView().Content()
 }

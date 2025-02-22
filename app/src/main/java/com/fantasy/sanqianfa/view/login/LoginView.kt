@@ -1,0 +1,103 @@
+package com.fantasy.sanqianfa.view.login
+
+
+import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fantasy.components.base.BaseScreen
+import com.fantasy.components.base.BaseViewModel
+import com.fantasy.components.extension.randomString
+import com.fantasy.components.widget.CXScaffold
+import com.fantasy.sanqianfa.R
+
+enum class LoginStep {
+    wellcome0,
+    wellcome1,
+    wellcome2,
+    phoneNumber,
+    smsCode;
+
+    val wellComeText: String
+        get() = when (this) {
+            wellcome0 -> randomString(32)
+            wellcome1 -> randomString(32)
+            wellcome2 -> randomString(32)
+            phoneNumber -> "请输入手机号"
+            smsCode -> "请输入验证码"
+        }
+
+    @get:DrawableRes
+    val image: Int
+        get() = when (this) {
+            wellcome0 -> R.drawable.wellcome_0
+            wellcome1 -> R.drawable.wellcome_1
+            wellcome2 -> R.drawable.wellcome_2
+            phoneNumber -> R.drawable.wellcome_2
+            smsCode -> R.drawable.wellcome_2
+        }
+}
+
+class LoginViewModel : BaseViewModel() {
+    var loginStep by mutableStateOf(LoginStep.wellcome0)
+
+    var phoneNumberInput by mutableStateOf("")
+    fun nextStep() {
+        when (loginStep) {
+            LoginStep.wellcome0 -> loginStep = LoginStep.wellcome1
+            LoginStep.wellcome1 -> loginStep = LoginStep.wellcome2
+            LoginStep.wellcome2 -> loginStep = LoginStep.phoneNumber
+            LoginStep.phoneNumber -> getSMSCode()
+            LoginStep.smsCode -> login()
+        }
+    }
+
+    // 发送验证码
+    fun getSMSCode() {
+        // 成功了
+        loginStep = LoginStep.smsCode
+    }
+
+    // 登录
+    fun login() {
+        // 成功了
+    }
+}
+
+class LoginView : BaseScreen() {
+    @Composable
+    override fun body() {
+        val vm = viewModel<LoginViewModel>()
+
+        CXScaffold(topBar = {}) {
+            AnimatedContent(
+                targetState = vm.loginStep,
+                label = "",
+                transitionSpec = {
+                    slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
+                }
+            ) { step ->
+                when (step) {
+                    LoginStep.wellcome0,
+                    LoginStep.wellcome1,
+                    LoginStep.wellcome2 -> WellComeView()
+                    LoginStep.phoneNumber -> PhoneNumberInputView()
+                    LoginStep.smsCode -> SMSCodeInputView()
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview() {
+    LoginView().Content()
+}

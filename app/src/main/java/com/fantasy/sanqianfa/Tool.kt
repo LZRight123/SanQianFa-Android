@@ -3,7 +3,7 @@ package com.fantasy.sanqianfa
 import com.fantasy.components.tools.Apphelper
 import com.fantasy.components.tools.RouterAnimate
 import com.fantasy.sanqianfa.manager.userManager
-import com.fantasy.sanqianfa.view.login.LoginMainView
+import com.fantasy.sanqianfa.view.login.LoginView
 import com.fantasy.sanqianfa.view.main.MainView
 
 fun routeToMain() {
@@ -19,7 +19,7 @@ fun routeToLogin() {
 //    if (!FantasyKV.shared.decodeBool("has_review_macos9", false)) {
 //        Apphelper.replaceAll(LoginMACOS9View(), animate = RouterAnimate.vertical)
 //    } else {
-    Apphelper.replaceAll(LoginMainView(), animate = RouterAnimate.vertical)
+    Apphelper.replaceAll(LoginView(), animate = RouterAnimate.vertical)
 //    }
 }
 

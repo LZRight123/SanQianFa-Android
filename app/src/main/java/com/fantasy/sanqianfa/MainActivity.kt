@@ -23,7 +23,7 @@ import com.fantasy.components.widget.CXLoading
 import com.fantasy.components.widget.FpsCounter
 import com.fantasy.components.widget.ImageViewer
 import com.fantasy.components.widget.CXInfoBar
-import com.fantasy.sanqianfa.view.WelcomeView
+import com.fantasy.sanqianfa.view.LaunchView
 
 class MainActivity : BaseActivity() {
 
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
     override fun ComposeContent() {
         Box {
             Navigator(
-                screen = WelcomeView(),
+                screen = LaunchView(),
             ) { navigator ->
                 LaunchedEffect(key1 = Unit) {
                     Apphelper.navigator = navigator
