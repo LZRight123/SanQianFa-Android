@@ -17,10 +17,7 @@ object AppConfig {
     val isProd: Boolean get() = evn == Env.prod
 
     val baseUrl: String
-        get() = when (evn) {
-            Env.dev -> "https://*****.com"
-            Env.prod -> "https://*****.com"
-        }
+        get() = "https://sanqianfa.staging.api.strangerbell.com"
 
 
     const val ossBaseUrl = "*****"

@@ -50,6 +50,8 @@ import com.fantasy.components.extension.main
 import com.fantasy.components.extension.randomString
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
+import com.fantasy.components.tools.Apphelper
+import com.fantasy.components.tools.RouterAnimate
 import com.fantasy.components.tools.cxlog
 import com.fantasy.components.widget.CXScaffold
 import com.fantasy.sanqianfa.R
@@ -61,6 +63,9 @@ import com.fantasy.sanqianfa.components.YIN
 import com.fantasy.sanqianfa.manager.DivinationTool
 import com.fantasy.sanqianfa.manager.YaoType
 import io.github.sagar_viradiya.koreography
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DivinationViewModel : BaseViewModel() {
     var running by mutableStateOf(false)
@@ -80,11 +85,21 @@ class DivinationViewModel : BaseViewModel() {
     val isOver get() = divinationIndex == 6
     var gua by mutableStateOf<Hexagram?>(null)
     var bianGua by mutableStateOf<Hexagram?>(null)
-
+    var userInput = ""
 
     fun divination() {
         if (isOver) {
             //解卦
+            // 到一个新的页面 AnswerView
+            MainScope().launch {
+                Apphelper.pop(RouterAnimate.vertical)
+                delay(150)
+                Apphelper.show(AnswerView(
+                    current = gua?.name ?: "",
+                    future = bianGua?.name ?: "",
+                    q = userInput
+                ))
+            }
             return
         }
 
@@ -113,7 +128,9 @@ class DivinationView(val question: String) : BaseScreen() {
     @Composable
     override fun body() {
         val vm: DivinationViewModel = viewModel()
-
+        LaunchedEffect(Unit) {
+            vm.userInput = question
+        }
         Box(
             modifier = Modifier
                 .background(CXColor.b1)
