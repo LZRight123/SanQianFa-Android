@@ -2,7 +2,16 @@ package com.fantasy.sanqianfa.view.main
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,12 +25,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fantasy.components.aamedium.bottomFadingEdge
 import com.fantasy.components.extension.compose.CXPaddingValues
-import com.fantasy.components.extension.compose.addHazeContent
+import com.fantasy.components.extension.compose.fantasyClick
 import com.fantasy.components.extension.randomString
 import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
+import com.fantasy.components.tools.Apphelper
 import com.fantasy.components.widget.CXScaffold
 import com.fantasy.sanqianfa.R
 import com.fantasy.sanqianfa.components.SQIcon
@@ -55,7 +64,10 @@ private fun HeaderSection() {
     ) {
         Text(
             text = "三钱法",
-            style = CXFont.big1b.v1
+            style = CXFont.big1b.v1,
+            modifier = Modifier.fantasyClick {
+                Apphelper.push(SuspendView())
+            }
         )
         Text(
             text = "lvl1 - 今日免费 0 / 1",
