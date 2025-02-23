@@ -84,10 +84,14 @@ fun SQMainButton(
 @Composable
 fun SQSmallButton(
     text: String,
+    enabled: Boolean = true,
+    loading: Boolean = false,
     onClick: () -> Unit
 ) {
     CXButton(
         onClick = onClick,
+        enabled = enabled,
+        isLoading = loading,
         modifier = Modifier
             .clip(CircleShape)
             .background(CXColor.main)

@@ -48,7 +48,10 @@ fun PhoneNumberInputView(vm: LoginViewModel = viewModel()) {
         ) {
             vm.phoneNumberInput = it
         }
-        SQSmallButton(text = "获取验证码") {
+        SQSmallButton(
+            text = "获取验证码",
+            loading = vm.requestState.isLoading
+        ) {
             vm.nextStep()
         }
 

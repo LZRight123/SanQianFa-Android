@@ -21,6 +21,7 @@ import com.fantasy.components.theme.CXColor
 import com.fantasy.components.theme.CXFont
 import com.fantasy.components.widget.CXLottieView
 import com.fantasy.sanqianfa.R
+import com.fantasy.sanqianfa.manager.userManager
 import com.fantasy.sanqianfa.routeToMain
 import kotlinx.coroutines.delay
 
@@ -28,6 +29,7 @@ class LaunchView : Screen {
     @Composable
     override fun Content() {
         LaunchedEffect(Unit) {
+            userManager.syncData()
             delay(500)
             routeToMain()
         }

@@ -11,12 +11,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fantasy.components.base.BaseScreen
 import com.fantasy.components.base.BaseViewModel
+import com.fantasy.components.base.RequestState
 import com.fantasy.components.extension.randomString
+import com.fantasy.components.tools.cxlog
 import com.fantasy.components.widget.CXScaffold
 import com.fantasy.sanqianfa.R
+import com.fantasy.sanqianfa.api.LoginAPI
+import com.fantasy.sanqianfa.api.networking.Networking
+import com.fantasy.sanqianfa.manager.LocalUserManager
+import com.fantasy.sanqianfa.manager.userManager
+import com.fantasy.sanqianfa.routeToMain
+import kotlinx.coroutines.launch
 
 enum class LoginStep {
     wellcome0,
@@ -48,7 +57,8 @@ enum class LoginStep {
 class LoginViewModel : BaseViewModel() {
     var loginStep by mutableStateOf(LoginStep.wellcome0)
 
-    var phoneNumberInput by mutableStateOf("")
+    var phoneNumberInput by mutableStateOf("15207118888")
+    var smsCodeInput by mutableStateOf("9999")
     fun nextStep() {
         when (loginStep) {
             LoginStep.wellcome0 -> loginStep = LoginStep.wellcome1
@@ -62,12 +72,29 @@ class LoginViewModel : BaseViewModel() {
     // 发送验证码
     fun getSMSCode() {
         // 成功了
-        loginStep = LoginStep.smsCode
+        viewModelScope.launch {
+            requestState = RequestState.loading
+            val res = Networking.create<LoginAPI>().request_sms_code(
+                LoginAPI.Params(phone_number = phoneNumberInput)
+            )
+            requestState = RequestState.ok
+            loginStep = LoginStep.smsCode
+        }
     }
 
     // 登录
     fun login() {
-        // 成功了
+        viewModelScope.launch {
+            requestState = RequestState.loading
+            val res = Networking.create<LoginAPI>().signup_and_login_with_mobile_phone_and_sms_code(
+                LoginAPI.Params(phone_number = phoneNumberInput, sms_code = smsCodeInput)
+            )
+            requestState = RequestState.ok
+            res.data?.let {
+                userManager.loginSuccess(it)
+                routeToMain()
+            }
+        }
     }
 }
 

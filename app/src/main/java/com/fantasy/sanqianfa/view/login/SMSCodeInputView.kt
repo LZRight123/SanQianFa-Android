@@ -38,7 +38,7 @@ fun SMSCodeInputView(vm: LoginViewModel = viewModel()) {
             style = CXFont.big3.v1.f1c
         )
         CXTextFiled(
-            value = vm.phoneNumberInput,
+            value = vm.smsCodeInput,
             textStyle = CXFont.f1.v1.f1c,
             placeholder = "验证码",
             modifier = Modifier
@@ -47,9 +47,10 @@ fun SMSCodeInputView(vm: LoginViewModel = viewModel()) {
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
-            vm.phoneNumberInput = it
+            vm.smsCodeInput = it
         }
-        SQSmallButton(text = "登录") {
+        SQSmallButton(text = "登录",
+            loading = vm.requestState.isLoading) {
             vm.nextStep()
         }
 
