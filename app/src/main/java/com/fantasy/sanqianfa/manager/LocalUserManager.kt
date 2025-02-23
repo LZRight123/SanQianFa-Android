@@ -10,11 +10,14 @@ import com.fantasy.components.tools.readObject
 import com.fantasy.components.tools.writeObject
 import com.fantasy.sanqianfa.model.UserInfo
 import com.fantasy.components.tools.CXKV
+import com.fantasy.components.tools.cxlog
 import com.fantasy.components.tools.getContext
 import com.fantasy.components.tools.isDebugBuilder
 import com.fantasy.sanqianfa.model.TokenModel
 import com.fantasy.sanqianfa.routeToLogin
 import com.fantasy.getgirlsmoney.manager.ConfigStore
+import com.fantasy.sanqianfa.api.UserAPI
+import com.fantasy.sanqianfa.api.networking.Networking
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -132,15 +135,15 @@ class LocalUserManager private constructor() : ViewModel() {
     private fun refreshUserInfo(model: UserInfo) {
         userInfo = model
         // 设置极光别名
-        if (model.id.isNotEmpty()) {// 为0表示mock logout
-            if (pushAlias == model.pushAlias) {
-                ThirdSDKManager.shared.bindPushAlias(model.pushAlias)
-            } else {
-                CXKV.shared.encode(kPushAlias, model.pushAlias)
-                ThirdSDKManager.shared.unBindAlias(model.pushAlias)
-                ThirdSDKManager.shared.bindPushAlias(model.pushAlias)
-            }
-        }
+//        if (model.id.isNotEmpty()) {// 为0表示mock logout
+//            if (pushAlias == model.pushAlias) {
+//                ThirdSDKManager.shared.bindPushAlias(model.pushAlias)
+//            } else {
+//                CXKV.shared.encode(kPushAlias, model.pushAlias)
+//                ThirdSDKManager.shared.unBindAlias(model.pushAlias)
+//                ThirdSDKManager.shared.bindPushAlias(model.pushAlias)
+//            }
+//        }
 
         viewModelScope.launch(Dispatchers.IO) {
             launch {
@@ -154,8 +157,8 @@ class LocalUserManager private constructor() : ViewModel() {
 
     fun logout() {
         viewModelScope.launch {
-            val alias = userInfo.pushAlias
-            ThirdSDKManager.shared.unBindAlias(alias)
+//            val alias = userInfo.pushAlias
+//            ThirdSDKManager.shared.unBindAlias(alias)
             loginSuccess(TokenModel())
             refreshUserInfo(UserInfo())
         }
@@ -165,12 +168,11 @@ class LocalUserManager private constructor() : ViewModel() {
     }
 
     suspend fun fetchRemoteAndRefreshUser(): UserInfo? {
-//        val data = Networking.create<UserAPI>().me().data
-//        data?.let {
-//            refreshUserInfo(it)
-//        }
-//        return data
-        return null
+        val data = Networking.create<UserAPI>().getUserProfile().data
+        data?.let {
+            refreshUserInfo(it)
+        }
+        return data
     }
 
 //    suspend fun updateUserInfo(mod: UserAPI.UserUpdate, uiimage: UIImage?): Boolean {

@@ -71,7 +71,10 @@ private fun HeaderSection() {
         )
         Text(
             text = "lvl1 - 今日免费 0 / 1",
-            style = CXFont.f2.v1.copy(color = CXColor.f2)
+            style = CXFont.f2.v1.copy(color = CXColor.f2),
+            modifier = Modifier.fantasyClick {
+                Apphelper.push(UserInfoView())
+            }
         )
     }
 }

@@ -92,6 +92,8 @@ class LoginViewModel : BaseViewModel() {
             requestState = RequestState.ok
             res.data?.let {
                 userManager.loginSuccess(it)
+                // 获取用户资料
+                userManager.fetchRemoteAndRefreshUser()
                 routeToMain()
             }
         }

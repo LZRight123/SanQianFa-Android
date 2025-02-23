@@ -34,12 +34,12 @@ class FallbackAdapterFactory : JsonAdapter.Factory {
         }
 
         return when (type) {
-            String::class.java, String::class.javaObjectType -> StringAdapter(isNullable = type == String::class.javaObjectType)
-            Long::class.java, Long::class.javaObjectType -> LongAdapter(isNullable = type == Long::class.javaObjectType)
-            Int::class.java, Int::class.javaObjectType -> IntAdapter(isNullable = type == Int::class.javaObjectType)
-            Double::class.java, Double::class.javaObjectType -> DoubleAdapter(isNullable = type == Double::class.javaObjectType)
-            Float::class.java, Float::class.javaObjectType -> FloatAdapter(isNullable = type == Float::class.javaObjectType)
-            Boolean::class.java, Boolean::class.javaObjectType -> BooleanAdapter(isNullable = type == Boolean::class.javaObjectType)
+            String::class.java, String::class.javaObjectType -> StringAdapter()
+            Long::class.java, Long::class.javaObjectType -> LongAdapter()
+            Int::class.java, Int::class.javaObjectType -> IntAdapter()
+            Double::class.java, Double::class.javaObjectType -> DoubleAdapter()
+            Float::class.java, Float::class.javaObjectType -> FloatAdapter()
+            Boolean::class.java, Boolean::class.javaObjectType -> BooleanAdapter()
             else -> null
         }
     }
