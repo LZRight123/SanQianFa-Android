@@ -3,12 +3,15 @@ on:
 
 jobs:
   job1:
+    runs-on: ubuntu-latest
     steps:
       - run: echo "Hello, world!"
   job2:
+    runs-on: ubuntu-latest
     steps:
       - run: pwd
       - run: ls -la
   job3:
+    runs-on: windows-latest
     steps:
       - run: node --version
