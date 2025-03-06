@@ -2,8 +2,12 @@ on:
   push:
 
 jobs:
-  npm-build:
+  test:
     runs-on: ubuntu-latest
     steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
       - run: pwd
-      - run: ls -la
+        name: 打印当前目录
+      - name: 打印当前目录下的文件
+        run: ls -la
