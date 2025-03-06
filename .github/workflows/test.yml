@@ -2,16 +2,9 @@ on:
   push:
 
 jobs:
-  job1:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Hello, world!"
-  job2:
+  npm-build:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: ls -la
-  job3:
-    runs-on: windows-latest
-    steps:
-      - run: node --version
+      - run: npm install
+      - run: npm run build
