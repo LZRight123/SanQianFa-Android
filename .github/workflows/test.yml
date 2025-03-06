@@ -3,4 +3,12 @@ on:
 
 jobs:
   job1:
+    steps:
+      - run: echo "Hello, world!"
   job2:
+    steps:
+      - run: pwd
+      - run: ls -la
+  job3:
+    steps:
+      - run: node --version
