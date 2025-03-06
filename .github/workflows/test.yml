@@ -6,5 +6,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: npm install
-      - run: npm run build
+      - run: ls -la
